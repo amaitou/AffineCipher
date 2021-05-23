@@ -5,5 +5,5 @@ as **wikipedia** says : The affine cipher is a type of monoalphabetic substituti
 ## Formula
 ```
   C = (a * P + b) mod 26
-  P = a ^ -1 * (C - b) mod 26
+  P = (a ^ -1 * (C - b)) mod 26
 ```
