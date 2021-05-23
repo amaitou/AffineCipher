@@ -7,3 +7,7 @@ as **wikipedia** says : The affine cipher is a type of monoalphabetic substituti
   C = (a * P + b) mod 26
   P = (a ^ -1 * (C - b)) mod 26
 ```
+## Contact Me
+* Facebook : https://www.facebook.com/Lelouche01/
+* Twitter : https://twitter.com/Lelouche01
+* Github : https://github.com/Lelouche01
