@@ -10,13 +10,14 @@ as **wikipedia** says : The affine cipher is a type of monoalphabetic substituti
   P = (a ^ -1 * (C - b)) mod 26
 ```
 ## Guide
-
+```
  Usage: python3 affinecipher.py <type> <string> <a> <b>
   
 * type    : {e: encryption, d: decryption}
 * string  : the text you want to enrypt or decrypt
 * a       : the first operand of the key
 * b       : the second operand of the key
+```
   
 ## Contact Me
   
