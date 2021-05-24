@@ -11,7 +11,7 @@ as **wikipedia** says : The affine cipher is a type of monoalphabetic substituti
 ```
 ## Guide
 
-###### Usage: python3 affinecipher.py <type> <string> <a> <b>
+ Usage: python3 affinecipher.py <type> <string> <a> <b>
   
 * type    : {e: encryption, d: decryption}
 * string  : the text you want to enrypt or decrypt
