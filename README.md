@@ -22,6 +22,6 @@ as **wikipedia** says : The affine cipher is a type of monoalphabetic substituti
 ## Contact Me
   
 * Facebook : https://www.facebook.com/Lelouche0x1
-* Instagram: https://www.instagram.com/lelouche0x1/
+* Instagram : https://www.instagram.com/lelouche0x1/
 * Twitter  : https://twitter.com/Lelouche01
 * Github   : https://github.com/Lelouche01
