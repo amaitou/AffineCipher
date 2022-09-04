@@ -20,6 +20,9 @@ as **wikipedia** says : The affine cipher is a type of monoalphabetic substituti
 ```
   
 ## Contact Me
-  
-* Twitter : https://twitter.com/amait0u
-* Instagram : https://www.instagram.com/amait0u
+
+* [Twitter][_1]
+* [Instagram][_2]
+
+[_1]: https://twitter.com/amait0u
+[_2]: https://www.instagram.com/amait0u
