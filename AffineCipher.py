@@ -2,15 +2,44 @@ import sys
 import string
 import platform
 
+"""
+    Affine Cipher Implementation
+    ----------------------------
+        This script provides an implementation of the Affine Cipher, a type of substitution cipher
+        that combines modular arithmetic for encryption and decryption. The script includes functions
+        for calculating the greatest common divisor, checking coprimality, and finding modular inverses.
+        It defines separate functions for encryption and decryption operations. The command-line interface
+        allows users to specify the type of operation (encryption 'e' or decryption 'd'), the input string,
+        and the key parameters 'a' and 'b'. The script includes error handling to ensure valid input, such as
+        verifying that the 'a' parameter is coprime to 26. Additionally, the script adapts the output color
+        formatting based on the platform, providing enhanced readability on Linux and macOS terminals.
+"""
+
 def gcd(x, y):
+    """
+        gcd(x, y) -> int
+        Calculates the greatest common divisor of two integers using the Euclidean algorithm.
+        Returns the computed GCD.
+    """
     while y:
         x, y = y, x % y
     return x
 
 def are_coprime(a, m):
+    """
+        are_coprime(a, m) -> bool
+        Checks if two integers 'a' and 'm' are coprime (have a GCD of 1).
+        Returns True if coprime, False otherwise.
+    """
     return gcd(a, m) == 1
 
 def keyinverse(a, m):
+    """
+        keyinverse(a, m) -> int
+        Finds the modular inverse of 'a' modulo 'm' if 'a' is coprime to 'm'.
+        Raises a ValueError if the inverse does not exist.
+        Returns the computed modular inverse.
+    """
     if not are_coprime(a, m):
         raise ValueError("The 'a' value must be coprime to 26.")
     for i in range(1, m):
@@ -19,12 +48,27 @@ def keyinverse(a, m):
     raise ValueError("Inverse does not exist for the given 'a' value.")
 
 def calcenc(c, a, b):
+    """
+        calcenc(c, a, b) -> int
+        Performs encryption for a single character using the Affine Cipher formula.
+        Returns the encrypted character's index in the alphabet.
+    """
     return (a * c + b) % 26
 
 def calcdec(c, a, b):
+    """
+        calcdec(c, a, b) -> int
+        Performs decryption for a single character using the Affine Cipher formula.
+        Returns the decrypted character's index in the alphabet.
+    """
     return (keyinverse(a, 26) * (c - b)) % 26
 
 def encryption(p, a, b):
+    """
+        encryption(p, a, b) -> str
+        Encrypts a given plaintext using the Affine Cipher with specified key parameters 'a' and 'b'.
+        Returns the encrypted ciphertext.
+    """
     result = ""
     for char in p:
         if char.isalpha():
@@ -35,6 +79,11 @@ def encryption(p, a, b):
     return result
 
 def decryption(c, a, b):
+    """
+        decryption(c, a, b) -> str
+        Decrypts a given ciphertext using the Affine Cipher with specified key parameters 'a' and 'b'.
+        Returns the decrypted plaintext.
+    """
     result = ""
     for char in c:
         if char.isalpha():
@@ -45,6 +94,11 @@ def decryption(c, a, b):
     return result
 
 if __name__ == "__main__":
+    """
+        Command-Line Interface
+        Parses command-line arguments, performs input validation, and executes encryption or
+        decryption based on user input. Provides informative error messages and usage instructions.
+    """
     lower = string.ascii_lowercase
     upper = string.ascii_uppercase
 
