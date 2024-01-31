@@ -1,76 +1,88 @@
-
 import sys
 import string
 import platform
 
-calcenc = lambda c, a, b: (a * c + b) % 26
-calcdec = lambda c, a, b: (keyinverse(a, 26) * (c - b)) % 26
+def gcd(x, y):
+    while y:
+        x, y = y, x % y
+    return x
 
-def keyinverse(a, m) :
-    for i in range(1, m) :
-        if (((a % m) * (i % m)) % m == 1) :
+def are_coprime(a, m):
+    return gcd(a, m) == 1
+
+def keyinverse(a, m):
+    if not are_coprime(a, m):
+        raise ValueError("The 'a' value must be coprime to 26.")
+    for i in range(1, m):
+        if (a * i) % m == 1:
             return i
-    return -1 ;
+    raise ValueError("Inverse does not exist for the given 'a' value.")
 
-def encryption(p, a, b) :
-    c = ""
-    for i in p :
-        if i.isalpha() :
-            if i in lower :
-                c += lower[calcenc(lower.index(i), a, b)]
-            else :
-                c += upper[calcenc(upper.index(i), a, b)]
-        else :
-            c += i
-    return c
+def calcenc(c, a, b):
+    return (a * c + b) % 26
 
-def decryption(c, a, b) :
-    p = ""
-    for i in c :
-        if i.isalpha() :
-            if i in lower :
-                p += lower[calcdec(lower.index(i), a, b)]
-            else :
-                p += upper[calcdec(upper.index(i), a, b)]
-        else :
-            p += i
-    return p
+def calcdec(c, a, b):
+    return (keyinverse(a, 26) * (c - b)) % 26
 
-if __name__ == "__main__" :
+def encryption(p, a, b):
+    result = ""
+    for char in p:
+        if char.isalpha():
+            base = lower if char.islower() else upper
+            result += base[calcenc(base.index(char), a, b)]
+        else:
+            result += char
+    return result
 
+def decryption(c, a, b):
+    result = ""
+    for char in c:
+        if char.isalpha():
+            base = lower if char.islower() else upper
+            result += base[calcdec(base.index(char), a, b)]
+        else:
+            result += char
+    return result
+
+if __name__ == "__main__":
     lower = string.ascii_lowercase
-    upper = string.ascii_uppercase  
+    upper = string.ascii_uppercase
 
-    if platform.system().startswith("Linux") :
-	    red , green , yellow , blue , endc = '\033[91m' , '\033[92m' ,'\033[93m' , '\033[94m' , '\033[0m'
-    else :
-	    red = green = yellow = blue = endc = ""
+    system_platform = platform.system()
 
-    if len(sys.argv) < 5 :
+    if system_platform == "Linux" or system_platform == "Darwin":
+        red, green, yellow, blue, endc = '\033[91m', '\033[92m', '\033[93m', '\033[94m', '\033[0m'
+    else:
+        red = green = yellow = blue = endc = ""
 
-        print(red + "! Usage: " + endc + "python3 affinecipher.py <type> <string> <a> <b>")
+    if len(sys.argv) < 5:
+        print(f"{red}! Usage: {endc}python3 affinecipher.py <type> <string> <a> <b>")
         print('''
         - type    : {e: encryption, d: decryption}
-        - string  : the text you want to enrypt or decrypt
+        - string  : the text you want to encrypt or decrypt
         - a       : the first operand of the key
         - b       : the second operand of the key
     ''')
-
-        print(yellow + "* Note: " + endc + "make sure you add double quotes in case the string has whitespaces")
+        print(f"{yellow}* Note: {endc}make sure 'a' is coprime to 26 for a valid Affine Cipher")
+        print(f"{yellow}* Note: {endc}make sure you add double quotes in case the string has whitespaces")
         exit()
-    
-    args= [i for i in sys.argv]
-    try :
+
+    args = sys.argv
+    try:
         a = int(args[3])
         b = int(args[4])
-    
-    except :
-        print(red + 'Error: ' + endc + 'Operands must be numbers not strings')
+
+    except ValueError:
+        print(f"{red}Error: {endc}Operands must be numbers not strings")
         exit()
 
-    if args[1] == "e" :
+    if not are_coprime(a, 26):
+        print(f"{red}Error: {endc}The 'a' value must be coprime to 26.")
+        exit()
+
+    if args[1] == "e":
         print(encryption(args[2], a, b))
-    elif args[1] == "d" :
+    elif args[1] == "d":
         print(decryption(args[2], a, b))
-    else :
-        print(red + "!Error: " + endc + "Unvalid type of operation")
+    else:
+        print(f"{red}!Error: {endc}Invalid type of operation")
